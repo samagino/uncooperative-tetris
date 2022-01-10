@@ -19,6 +19,17 @@ int x = 431424, y = 598356, r = 427089, px = 247872, py = 799248, pr,
 // extract a 2-bit number from a block entry
 int NUM(int x, int y) { return 3 & block[p][x] >> y; }
 
+// added by one Sammy-Sam
+void fuckUpATetramino(){
+  int i   = rand() % 7,
+      j   = rand() % 4,
+      rot = block[i][j],
+      d   = (rand() % 3) - 1;
+
+  rot += d;
+  block[i][j] = rot;
+}
+
 // create a new piece, don't remove old one (it has landed and should stick)
 void new_piece() {
   y = py = 0;
@@ -50,13 +61,14 @@ void set_piece(int x, int y, int r, int v) {
 }
 
 // move a piece from old (p*) coords to new
-int update_piece() {
+void update_piece() {
   set_piece(px, py, pr, 0);
   set_piece(px = x, py = y, pr = r, p + 1);
 }
 
 // remove line(s) from the board if they're full
 void remove_line() {
+  int prevscore = score;
   for (int row = y; row <= y + NUM(r, 18); row++) {
     c = 1;
     for (int i = 0; i < 10; i++) {
@@ -70,6 +82,10 @@ void remove_line() {
     }
     memset(&board[0][0], 0, 10);
     score++;
+  }
+
+  if (prevscore < score) {
+    fuckUpATetramino();
   }
 }
 

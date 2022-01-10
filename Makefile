@@ -1,6 +1,6 @@
 LDFLAGS=-lcurses
 
-all: tinytetris
+all: uncooperative-tetris
 
 clean:
-	rm -f tinytetris tinytetris-commented
+	rm -f uncooperative-tetris
